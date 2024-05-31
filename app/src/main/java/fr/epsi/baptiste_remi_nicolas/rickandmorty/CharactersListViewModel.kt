@@ -5,7 +5,7 @@ import retrofit2.http.GET
 
 interface API {
     @GET("character")
-    fun getCharacters(): Call<CharacterResponse>
+     fun getCharacters(): Call<CharacterResponse>
 }
 
 data class CharacterResponse(

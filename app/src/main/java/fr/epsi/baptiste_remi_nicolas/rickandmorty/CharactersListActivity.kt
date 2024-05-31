@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import network.RickAndMortyApiService
 
 class CharactersListActivity : AppCompatActivity() {
     private lateinit var adapter: CharacterAdapter
@@ -31,7 +32,7 @@ class CharactersListActivity : AppCompatActivity() {
     }
 
     private fun fetchCharacters() {
-        ServiceRetrofit.api.getCharacters().enqueue(object : retrofit2.Callback<CharacterResponse> {
+        RickAndMortyApiService.api.getCharacters().enqueue(object : retrofit2.Callback<CharacterResponse> {
             override fun onResponse(call: retrofit2.Call<CharacterResponse>, response: retrofit2.Response<CharacterResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
