@@ -1,7 +1,10 @@
 package fr.epsi.baptiste_remi_nicolas.rickandmorty
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import network.RickAndMortyApiService
 
-class CharactersListActivity : AppCompatActivity() {
+class CharactersListActivity : AppCompatActivity(), CharacterAdapter.OnCharacterClickListener {
     private lateinit var adapter: CharacterAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,24 +29,65 @@ class CharactersListActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         adapter = CharacterAdapter(mutableListOf())
+        adapter.setOnCharacterClickListener(this)
         recyclerView.adapter = adapter
 
         fetchCharacters()
     }
 
+
+
     private fun fetchCharacters() {
-        RickAndMortyApiService.api.getCharacters().enqueue(object : retrofit2.Callback<CharacterResponse> {
-            override fun onResponse(call: retrofit2.Call<CharacterResponse>, response: retrofit2.Response<CharacterResponse>) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        adapter.updateCharacters(it.results)
+        val allCharacters = mutableListOf<Character>()
+        val currentPage = 1
+        var totalPages = 0
+
+        fun fetchCharacters(page: Int) {
+            RickAndMortyApiService.api.getCharacters(page).enqueue(object : retrofit2.Callback<CharacterResponse> {
+                override fun onResponse(call: retrofit2.Call<CharacterResponse>, response: retrofit2.Response<CharacterResponse>) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            if (it.info.pages == 0) {
+                                return
+                            }
+
+                            if (totalPages == 0) {
+                                totalPages = it.info.pages
+                            }
+
+                            allCharacters.addAll(it.results)
+                            if (page < totalPages) {
+                                fetchCharacters(page + 1)
+                            } else {
+                                adapter.updateCharacters(allCharacters)
+                            }
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(call: retrofit2.Call<CharacterResponse>, t: Throwable) {
-                Log.e("CharactersListActivity", "Failed to fetch characters", t)
-            }
-        })
+                override fun onFailure(call: retrofit2.Call<CharacterResponse>, t: Throwable) {
+                    Log.e("CharactersListActivity", "Failed to fetch characters", t)
+                    showError()
+                }
+            })
+        }
+
+        fetchCharacters(currentPage)
     }
+
+    override fun onCharacterClick(character: Character) {
+        val intent = Intent(this, CharacterDetailsActivity::class.java)
+        intent.putExtra("character_id", character.id)
+        startActivity(intent)
+    }
+    private fun showError() {
+        findViewById<RecyclerView>(R.id.characters_rv).visibility = View.GONE
+        findViewById<TextView>(R.id.errorMessage).apply {
+            visibility = View.VISIBLE
+        }
+
+    }
+
+
+
 }

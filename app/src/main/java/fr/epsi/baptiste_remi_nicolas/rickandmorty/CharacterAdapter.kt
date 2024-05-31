@@ -10,8 +10,30 @@ import androidx.recyclerview.widget.RecyclerView
 class CharacterAdapter(private val characterList: MutableList<Character>) :
     RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {
 
-    class CharacterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    // Interface pour gérer les clics sur les personnages
+    interface OnCharacterClickListener {
+        fun onCharacterClick(character: Character)
+    }
+
+    private var characterClickListener: OnCharacterClickListener? = null
+
+    // Méthode pour définir le listener
+    fun setOnCharacterClickListener(listener: CharactersListActivity) {
+        this.characterClickListener = listener
+    }
+
+    inner class CharacterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val characterName: TextView = itemView.findViewById(R.id.characterName)
+
+        init {
+            // Ajout du ClickListener à l'initialisation
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    characterClickListener?.onCharacterClick(characterList[position])
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
@@ -33,3 +55,4 @@ class CharacterAdapter(private val characterList: MutableList<Character>) :
         notifyDataSetChanged()
     }
 }
+
