@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import network.RickAndMortyApiService
 
 class CharactersListActivity : AppCompatActivity(), CharacterAdapter.OnCharacterClickListener {
+
     private lateinit var adapter: CharacterAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,7 @@ class CharactersListActivity : AppCompatActivity(), CharacterAdapter.OnCharacter
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         val recyclerView = findViewById<RecyclerView>(R.id.characters_rv)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -35,11 +37,9 @@ class CharactersListActivity : AppCompatActivity(), CharacterAdapter.OnCharacter
         fetchCharacters()
     }
 
-
-
     private fun fetchCharacters() {
         val allCharacters = mutableListOf<Character>()
-        val currentPage = 1
+        var currentPage = 1
         var totalPages = 0
 
         fun fetchCharacters(page: Int) {
@@ -47,10 +47,6 @@ class CharactersListActivity : AppCompatActivity(), CharacterAdapter.OnCharacter
                 override fun onResponse(call: retrofit2.Call<CharacterResponse>, response: retrofit2.Response<CharacterResponse>) {
                     if (response.isSuccessful) {
                         response.body()?.let {
-                            if (it.info.pages == 0) {
-                                return
-                            }
-
                             if (totalPages == 0) {
                                 totalPages = it.info.pages
                             }
@@ -76,18 +72,16 @@ class CharactersListActivity : AppCompatActivity(), CharacterAdapter.OnCharacter
     }
 
     override fun onCharacterClick(character: Character) {
-        val intent = Intent(this, CharacterDetailsActivity::class.java)
-        intent.putExtra("character_id", character.id)
+        val intent = Intent(this, CharacterDetailsActivity::class.java).apply {
+            putExtra("character_id", character.id)
+        }
         startActivity(intent)
     }
+
     private fun showError() {
         findViewById<RecyclerView>(R.id.characters_rv).visibility = View.GONE
         findViewById<TextView>(R.id.errorMessage).apply {
             visibility = View.VISIBLE
         }
-
     }
-
-
-
 }

@@ -3,37 +3,27 @@ package fr.epsi.baptiste_remi_nicolas.rickandmorty
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
+import coil.load
 
 class CharacterAdapter(private val characterList: MutableList<Character>) :
     RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {
 
-    // Interface pour gérer les clics sur les personnages
+    private var listener: OnCharacterClickListener? = null
+
     interface OnCharacterClickListener {
         fun onCharacterClick(character: Character)
     }
 
-    private var characterClickListener: OnCharacterClickListener? = null
-
-    // Méthode pour définir le listener
-    fun setOnCharacterClickListener(listener: CharactersListActivity) {
-        this.characterClickListener = listener
+    fun setOnCharacterClickListener(listener: OnCharacterClickListener) {
+        this.listener = listener
     }
 
-    inner class CharacterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class CharacterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val characterImage: ImageView = itemView.findViewById(R.id.characterImage)
         val characterName: TextView = itemView.findViewById(R.id.characterName)
-
-        init {
-            // Ajout du ClickListener à l'initialisation
-            itemView.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    characterClickListener?.onCharacterClick(characterList[position])
-                }
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
@@ -45,6 +35,12 @@ class CharacterAdapter(private val characterList: MutableList<Character>) :
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val currentItem = characterList[position]
         holder.characterName.text = currentItem.name
+        holder.characterImage.load(currentItem.image) {
+        }
+
+        holder.itemView.setOnClickListener {
+            listener?.onCharacterClick(currentItem)
+        }
     }
 
     override fun getItemCount() = characterList.size
