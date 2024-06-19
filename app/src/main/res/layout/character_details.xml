@@ -3,16 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/fond_ecran_details">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#14A528"
-        android:elevation="4dp"
         android:title="Nom du personnage"
         android:titleTextColor="#FFFFFF" />
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

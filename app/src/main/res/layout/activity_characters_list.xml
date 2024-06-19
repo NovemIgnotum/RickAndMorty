@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/main"
-    tools:context=".CharactersListActivity">
+    tools:context=".CharactersListActivity"
+    android:background="@drawable/fond_ecran_liste">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/characters_rv"
@@ -13,13 +14,6 @@
         android:layout_height="match_parent"
         />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/characterImage"-->
-<!--        android:layout_width="60dp"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:layout_marginEnd="8dp"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:contentDescription="TODO" />-->
 
     <TextView
         android:id="@+id/errorMessage"
