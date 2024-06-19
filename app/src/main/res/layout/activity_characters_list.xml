@@ -38,14 +38,29 @@
         android:layout_height="match_parent"
         />
 
+    <RelativeLayout
+        android:id="@+id/errorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/errorMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
-        android:text="Une erreur s'est produite lors du chargement des données."
-        android:visibility="gone"
-        android:layout_gravity="center"
-        android:textColor="#E71414"/>
+        <ImageView
+            android:id="@+id/errorGifImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/failed_animation" />
+
+        <TextView
+            android:id="@+id/errorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
+            android:text="Une erreur s'est produite lors du chargement des données."
+            android:layout_gravity="center"
+            android:textColor="#E71414"/>
+
+    </RelativeLayout>
+
 </LinearLayout>
