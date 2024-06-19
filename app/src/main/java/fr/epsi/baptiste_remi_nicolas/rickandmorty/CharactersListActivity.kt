@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +13,15 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.bumptech.glide.Glide
 import network.RickAndMortyApiService
 
 class CharactersListActivity : AppCompatActivity(), CharacterAdapter.OnCharacterClickListener {
 
     private lateinit var adapter: CharacterAdapter
-
+    private lateinit var loadingLayout: RelativeLayout
+    private lateinit var animationStart: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -33,6 +38,12 @@ class CharactersListActivity : AppCompatActivity(), CharacterAdapter.OnCharacter
         adapter = CharacterAdapter(mutableListOf())
         adapter.setOnCharacterClickListener(this)
         recyclerView.adapter = adapter
+
+
+        loadingLayout = findViewById(R.id.loading_view)
+        animationStart = findViewById(R.id.animation_start)
+        showLoadingLayout()
+
 
         fetchCharacters()
     }
@@ -56,6 +67,8 @@ class CharactersListActivity : AppCompatActivity(), CharacterAdapter.OnCharacter
                                 fetchCharacters(page + 1)
                             } else {
                                 adapter.updateCharacters(allCharacters)
+//                                findViewById<ImageView>(R.id.animation_start).visibility = View.GONE
+                                    hideLoadingLayout()
                             }
                         }
                     }
@@ -83,5 +96,15 @@ class CharactersListActivity : AppCompatActivity(), CharacterAdapter.OnCharacter
         findViewById<TextView>(R.id.errorMessage).apply {
             visibility = View.VISIBLE
         }
+    }
+    private fun showLoadingLayout() {
+        loadingLayout.visibility = View.VISIBLE
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.start_animation)
+            .into(animationStart)
+    }
+    private fun hideLoadingLayout() {
+        loadingLayout.visibility = View.GONE  // Cacher le RelativeLayout de chargement
     }
 }

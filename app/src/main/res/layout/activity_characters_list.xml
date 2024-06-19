@@ -8,6 +8,30 @@
     tools:context=".CharactersListActivity"
     android:background="@drawable/fond_ecran_liste">
 
+    <RelativeLayout
+        android:id="@+id/loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/animation_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/start_animation"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/animation_start"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Loading data ..."
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/characters_rv"
         android:layout_width="match_parent"
