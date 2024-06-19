@@ -16,8 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
-            android:background="@drawable/fond_transparent">
+            android:padding="16dp">
 
             <ImageView
                 android:id="@+id/characterImage"
