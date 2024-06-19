@@ -79,12 +79,10 @@ class CharacterDetailsActivity : AppCompatActivity() {
                 }
 
                 private fun updateUI(character: Character) {
-                    findViewById<TextView>(R.id.characterName).text = character.name
-                    findViewById<TextView>(R.id.characterSpecies).text = character.species
-                    findViewById<TextView>(R.id.characterStatus).text = character.status
-                    findViewById<TextView>(R.id.characterOrigin).text = character.origin.name
-                    findViewById<TextView>(R.id.characterLocation).text = character.location.name
-
+                    findViewById<TextView>(R.id.characterSpecies).text = "Species: ${character.species}"
+                    findViewById<TextView>(R.id.characterStatus).text = "Statut: ${character.status}"
+                    findViewById<TextView>(R.id.characterOrigin).text = "Origin: ${character.origin.name}"
+                    findViewById<TextView>(R.id.characterLocation).text = "Location: ${character.location.name}"
                     val characterImageView = findViewById<ImageView>(R.id.characterImage)
                     characterImageView.load(character.image) {
                     }

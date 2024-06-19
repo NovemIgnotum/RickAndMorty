@@ -34,13 +34,6 @@
                 android:contentDescription="TODO"
                 android:scaleType="fitCenter" />
 
-            <TextView
-                android:id="@+id/characterName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nom du personnage"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/characterSpecies"
