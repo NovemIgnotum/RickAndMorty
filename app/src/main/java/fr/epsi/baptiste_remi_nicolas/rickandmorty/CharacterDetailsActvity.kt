@@ -1,5 +1,6 @@
 package fr.epsi.baptiste_remi_nicolas.rickandmorty
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import coil.load
 import network.RickAndMortyApiService
 import retrofit2.Call
@@ -25,10 +27,25 @@ class CharacterDetailsActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        // Enable the up button
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Handle the back button press
+
+        val characterName = intent.getStringExtra("character_name") ?: "Character Details"
+        supportActionBar?.title = characterName
+
+
+        toolbar.post {
+            val customFont: Typeface? = ResourcesCompat.getFont(this, R.font.font_1)
+            for (i in 0 until toolbar.childCount) {
+                val view = toolbar.getChildAt(i)
+                if (view is TextView && view.text == characterName) {
+                    view.typeface = customFont
+                    break
+                }
+            }
+        }
+
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 finish()
@@ -79,10 +96,11 @@ class CharacterDetailsActivity : AppCompatActivity() {
                 }
 
                 private fun updateUI(character: Character) {
-                    findViewById<TextView>(R.id.characterSpecies).text = "Species: ${character.species}"
-                    findViewById<TextView>(R.id.characterStatus).text = "Statut: ${character.status}"
-                    findViewById<TextView>(R.id.characterOrigin).text = "Origin: ${character.origin.name}"
-                    findViewById<TextView>(R.id.characterLocation).text = "Location: ${character.location.name}"
+                    findViewById<TextView>(R.id.characterSpecies).text = character.species
+                    findViewById<TextView>(R.id.characterStatus).text = character.status
+                    findViewById<TextView>(R.id.characterGender).text = character.gender
+                    findViewById<TextView>(R.id.characterOrigin).text = character.origin.name
+                    findViewById<TextView>(R.id.characterLocation).text = character.location.name
                     val characterImageView = findViewById<ImageView>(R.id.characterImage)
                     characterImageView.load(character.image) {
                     }

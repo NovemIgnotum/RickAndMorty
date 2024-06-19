@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@drawable/fond_ecran_details">
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="396dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#14A528"
         android:title="Nom du personnage"
@@ -18,13 +18,15 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        app:cardCornerRadius="15dp">
 
         <LinearLayout
-            android:layout_width="368dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:background="@drawable/cardview_background">
 
             <ImageView
                 android:id="@+id/characterImage"
@@ -34,47 +36,95 @@
                 android:contentDescription="TODO"
                 android:scaleType="fitCenter" />
 
-
-            <TextView
-                android:id="@+id/characterSpecies"
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Espece du personnage"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                android:stretchColumns="1"
+                android:layout_marginTop="16dp">
 
-            <TextView
-                android:id="@+id/characterStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Species :"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:paddingEnd="8dp" />
+                    <TextView
+                        android:id="@+id/characterSpecies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+                </TableRow>
 
-            <TextView
-                android:id="@+id/characterGenre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Statut :"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:paddingEnd="8dp" />
+                    <TextView
+                        android:id="@+id/characterStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+                </TableRow>
 
-            <TextView
-                android:id="@+id/characterOrigin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gender :"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:paddingEnd="8dp" />
+                    <TextView
+                        android:id="@+id/characterGender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+                </TableRow>
 
-            <TextView
-                android:id="@+id/characterLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Origin :"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:paddingEnd="8dp" />
+                    <TextView
+                        android:id="@+id/characterOrigin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location :"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:paddingEnd="8dp" />
+                    <TextView
+                        android:id="@+id/characterLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+                </TableRow>
+
+            </TableLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>
-
-
-
