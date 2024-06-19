@@ -15,7 +15,7 @@ class CharacterDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.character_item)
+        setContentView(R.layout.character_details)
 
         val characterId = intent.getIntExtra("character_id", -1)
         if (characterId != -1) {
